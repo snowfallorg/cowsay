@@ -151,20 +151,20 @@ popd > /dev/null
 crop_width=$(echo "$cow_width*9" | bc)
 crop_height=$(echo "$cow_height*18.5" | bc)
 
-# Create and clean the `dist` directory.
-mkdir -p dist/
-rm -rf dist/*
+# Create and clean the `cow` directory.
+mkdir -p cow/
+rm -rf cow/*
 
 # Crop the image and give it a border.
 convert $temp/frames/frame-text-00001.png \
 	-crop ${crop_width}x${crop_height}+0+0 \
 	-bordercolor "#2e3440" \
 	-border 32x32 \
-	./dist/rendered.png
+	./cow/image.png
 
 # Write data needed for alt text (if desired).
-echo "$message" > ./dist/fortune.txt
-echo "$(basename $cow)" > ./dist/cow.txt
+echo "$message" > ./cow/message
+echo "$(rstrip $(basename $cow) ".cow")" > ./cow/name
 
 # Cleanup
 rm -rf $temp
