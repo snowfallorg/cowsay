@@ -67,7 +67,7 @@ First, include this flake as an input in your flake.
 }
 ```
 
-Then add the overlay or use the `quickjs` package from this flake directly.
+Then add the overlay or use the packages from this flake directly.
 
 ```nix
 {
@@ -102,7 +102,7 @@ Then add the overlay or use the `quickjs` package from this flake directly.
 				let
 					inherit (channels.nixpkgs) system;
 					# Use packages directly from the input instead.
-					inherit (inputs.quickjs.packages.${system}) cowsay cow2img;
+					inherit (inputs.cowsay.packages.${system}) cowsay cow2img;
 				in {
 					# Use the packages in some way.
 				};
