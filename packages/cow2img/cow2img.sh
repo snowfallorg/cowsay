@@ -7,10 +7,11 @@ rstrip() {
 }
 
 # Options
-opt_help=false
+opt_help=
 opt_message=
 opt_pick=
 opt_cow=
+opt_no_spinner=
 
 missing_opt_value() {
 	echo "Option $1 requires a value."
@@ -41,6 +42,10 @@ while [[ $# -gt 0 ]]; do
 			;;
 		-p|--pick)
 			opt_pick=true
+			shift
+			;;
+		--no-spinner)
+			opt_no_spinner=true
 			shift
 			;;
 		-*|--*)
@@ -144,7 +149,12 @@ done <<< "$rendered_cow"
 temp=$(mktemp -d)
 pushd $temp > /dev/null
 	echo "$rendered_cow" > cow
-	gum spin --title "Rendering" --spinner.foreground="4" -- vhs $tape
+
+	if [[ "${opt_no_spinner}" == "true" ]]; then
+		vhs $tape
+	else
+		gum spin --title "Rendering" --spinner.foreground="4" -- vhs $tape
+	fi
 popd > /dev/null
 
 # Bash doesn't support multiplication with floats, so we have to use `bc`.
