@@ -1,5 +1,5 @@
 {
-  description = "My Nix library";
+  description = "Snowfall Cowsay";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
