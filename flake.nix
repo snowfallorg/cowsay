@@ -22,8 +22,33 @@
   };
 
   outputs = inputs:
+    let
+      inherit (inputs.nixpkgs) lib;
+      inherit (lib) mapAttrsToList flatten foldl pipe;
+
+      collect-packages =
+        (system: packages:
+          mapAttrsToList
+            (name: package: {
+              inherit system name package;
+            })
+            packages
+        );
+
+      collected-packages = flatten (
+        mapAttrsToList collect-packages inputs.self.packages
+      );
+
+      create-jobs = jobs: entry: jobs // {
+        ${entry.name} = (jobs.${entry.name} or { }) // {
+          ${entry.system} = entry.package;
+        };
+      };
+
+      hydraJobs = foldl create-jobs { } collected-packages;
+    in
     inputs.snowfall-lib.mkFlake {
-      inherit inputs;
+      inherit inputs hydraJobs;
 
       src = ./.;
 
