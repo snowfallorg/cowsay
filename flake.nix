@@ -52,10 +52,10 @@
 
       src = ./.;
 
-      overlay-package-namespace = "snowfallorg";
-
-      outputs-builder = channels: {
-        packages.default = "cowsay";
+      snowfall = {
+        namespace = "snowfallorg";
       };
+
+      alias.packages.default = "cowsay";
     };
 }
