@@ -51,7 +51,7 @@ First, include this flake as an input in your flake.
 	description = "My awesome flake";
 
 	inputs = {
-		nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
+		nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
 		# Snowfall Lib is not required, but will make configuration easier for you.
 		snowfall-lib = {
@@ -74,7 +74,7 @@ Then add the overlay or use the packages from this flake directly.
 	description = "My awesome flake";
 
 	inputs = {
-		nixpkgs.url = "github:nixos/nixpkgs/nixos-22.05";
+		nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
 		# Snowfall Lib is not required, but will make configuration easier for you.
 		snowfall-lib = {
@@ -95,7 +95,11 @@ Then add the overlay or use the packages from this flake directly.
 
 			overlays = with inputs; [
 				# To make this flake's packages available in your NixPkgs package set.
-				cowsay.overlay
+				cowsay.overlays.default
+
+                # There are also individual overlays for specific packages.
+                cowsay.overlays."package/cow2img"
+                cowsay.overlays."package/cowsay"
 			];
 
 			outputs-builder = channels:
