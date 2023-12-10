@@ -158,7 +158,7 @@ pushd $temp > /dev/null
 popd > /dev/null
 
 # Bash doesn't support multiplication with floats, so we have to use `bc`.
-crop_width=$(echo "$cow_width*9" | bc)
+crop_width=$(echo "$cow_width*10" | bc)
 crop_height=$(echo "$cow_height*18.5" | bc)
 
 # Create and clean the `cow` directory.
